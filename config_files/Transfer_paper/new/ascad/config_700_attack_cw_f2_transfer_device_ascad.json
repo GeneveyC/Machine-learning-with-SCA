@@ -1,0 +1,77 @@
+{
+	"dataset": {
+		"root": "./",
+		"name": "trace_BD.h5",
+		"frame": {
+				"08BF0EM": [[350,450], [1600,1800], [2200,2400], [3200,3400]],
+				"08BF0PW": [[440,490], [1830,1930], [2350,2500], [3400,3800]],
+				"08BF1EM": [[250,350], [1300,1900]],
+				"08BF1PW": [[250,350], [1300,1900]],
+				"08BF2EM": [[600,800], [2700,3000], [3450,3650]],
+				"08BF2PW": [[600,800], [2700,3000], [3450,3650]],
+				"08BF4EM": [[500,700], [2800,3000], [3700,4000]],
+				"08BF4PW": [[500,700], [2800,3000], [3700,4000]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "./data/stm32/transfer_learning/12/",
+		"normalization": "minmax",
+		"split": [0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125],
+		"byte": 2
+	},
+	"training":
+		{
+			"multichannel":
+			{
+				"data": ["08BF2PW"],
+				"root_folder_models": "../models/stm32/ascad/transfer_learning/12/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+									"epoch": 3000,
+									"batch_size": 128,
+									"continue_from_model": "best-rank"
+									}
+			},
+			"multichannel2":
+			{
+				"data": ["08BF0PW", "08BF1PW", "08BF4PW"],
+				"root_folder_models": "../models/stm32/ascad/transfer_learning/100/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+									"epoch": 2000,
+									"batch_size": 128,
+									"continue_from_model": "best-rank"
+									}
+			},
+			"transfer":
+			{
+				"data": ["08BF0PW+08BF2PW", "08BF1PW+08BF2PW", "08BF4PW+08BF2PW"],
+				"root_folder_pretrained": "../models/stm32/ascad/transfer_learning/100/",
+				"root_folder_models": "../models/stm32/ascad/transfer_learning/112-2/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "transfert0",
+				"metric_load": "best-rank",
+				"pretrain_with_epoch":[50, 50, 50, 50],
+				"hyperparameters": {
+									"epoch": 3000,
+									"batch_size": 128,
+									"continue_from_model": "best-rank"
+									}
+			}
+		},
+	"attack":
+		{
+			"target": "08BF2PW",
+			"metric_attack": "best-rank",
+			"folder_numeric_graph": "./graph_ge2/numeric/stm32/ascad/transfer_device/08BF2PW/",
+			"folder_png_graph": "./graph_ge2/png/stm32/ascad/transfer_device/08BF2PW/"
+		}
+}

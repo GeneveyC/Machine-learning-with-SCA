@@ -1,0 +1,65 @@
+{
+	"dataset": {
+		"root": "./",
+		"name": "trace_BD.h5",
+		"frame": {
+				"08BF4PW": [[500,700], [2800,3000], [3700,4000]],
+				"08BF4EM": [[500,700], [2800,3000], [3700,4000]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "../data_gan/stm32/translate/",
+		"normalization": "minmax",
+		"split": [1.0, 1.0],
+		"byte": 2
+	},
+	"training": 
+		{
+			"multichannel":
+			{
+				"data": ["08BF4PW", "08BF4EM"],
+				"root_folder_models": "../models_gan/stm32/ascad/translate/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+								"epoch": 100,
+								"batch_size": 128
+								}
+			},
+			"generative":
+			{
+				"data": ["08BF4EM+08BF4PW"],
+				"root_folder_models": "../models_gan/stm32/segan/translate-side/tanh_rmsprop_128_0/f4emtof4pw/",
+				"root_folder_samples": "../sample_gan/stm32/segan/translate-side/tanh_rmsprop_128_0/f4emtof4pw/",
+				"root_folder_snr": "../snr_gan/stm32/segan/translate-side/tanh_rmsprop_128_0/f4emtof4pw/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "default",
+				"gan_model": "segan",
+				"filename_gan": "",
+				"gan_selected": "model_best_snr_over_200.h5",
+				"hyperparameters": {
+									"optimizer": "rmsprop",
+									"activation": "tanh",
+									"epoch": 200,
+									"batch_size": 128,
+									"lambda_1": 0
+									}
+			}
+		},
+		"attack":
+		{
+			"folder_numeric_graph": "./graph_gan/numeric/stm32/segan/translate-side/tanh_rmsprop_128_0/f4emtof4pw/ascad/",
+			"folder_png_graph": "./graph_gan/png/stm32/segan/translate-side/tanh_rmsprop_128_0/f4emtof4pw/ascad/",
+			"target": "08BF4EM",
+			"metric_attack": "best-loss",
+			"zoom": 0,
+			"gan": {
+				"gan_use": ["08BF4EM+08BF4PW"],
+				"gan_selected": "model_best_snr_over_200.h5"
+			}
+		}
+}

@@ -1,0 +1,40 @@
+{
+	"dataset": {
+		"root": "./",
+		"name": "trace_BD.h5",
+		"frame": {
+				"08BF0PW": [[440,490], [1830,1930], [2350,2500], [3400,3800]],
+				"08BF2PW": [[600,800], [2700,3000], [3450,3650]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "../data_gan/stm32/translate/",
+		"normalization": "minmax",
+		"split": [1.0, 1.0],
+		"byte": 2
+	},
+	"training": 
+		{
+			"generative":
+			{
+				"data": ["08BF0PW+08BF2PW"],
+				"root_folder_models": "../models_gan/stm32/segan/translate-device/tanh_rmsprop_128_001/f0pwtof2pw/",
+				"root_folder_samples": "../sample_gan/stm32/segan/translate-device/tanh_rmsprop_128_001/f0pwtof2pw/",
+				"root_folder_snr": "../snr_gan/stm32/segan/translate-device/tanh_rmsprop_128_001/f0pwtof2pw/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "default",
+				"gan_model": "segan",
+				"filename_gan": "",
+				"gan_selected": "model_best_snr_over_200.h5",
+				"hyperparameters": {
+									"optimizer": "rmsprop",
+									"activation": "tanh",
+									"epoch": 200,
+									"batch_size": 128,
+									"lambda_1": 0.01
+									}
+			}
+		}
+}

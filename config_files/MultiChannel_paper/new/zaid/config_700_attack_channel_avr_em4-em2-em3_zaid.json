@@ -1,0 +1,40 @@
+{
+	"dataset": {
+		"root": "/data2/backup_anz/e/Measures/multi-probes/",
+		"name": "traces_O0_3.h5",
+		"frame": {
+				"EM2": [[16000,16700]],
+				"EM3": [[23000,23700]],
+				"EM4": [[23000,23700]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "./data/avr/transfer_learning/100/",
+		"normalization": "minmax",
+		"split": [0.5, 0.5, 0.5],
+		"byte": 2
+	},
+	"training":
+		{
+			"multichannel":
+			{
+				"data": ["EM4*EM2*EM3"],
+				"root_folder_models": "../models/avr/zaid/transfer_learning/100/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "zaid",
+				"hyperparameters": {
+									"epoch": 400,
+									"batch_size": 128
+									}
+			}
+		},
+		"attack":
+		{
+			"target": "EM4*EM2*EM3",
+			"metric_attack": "best-rank",
+			"folder_numeric_graph": "./graph_ge2/numeric/avr/zaid/multi_channel/EM4*EM2*EM3/",
+			"folder_png_graph": "./graph_ge2/png/avr/zaid/multi_channel/EM4*EM2*EM3/"
+		}
+}

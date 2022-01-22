@@ -1,0 +1,70 @@
+{
+	"dataset": {
+		"root": "/data2/backup_anz/e/Measures/multi-probes/",
+		"name": "traces_O0_3.h5",
+		"frame": {
+				"EM2": [[16000,16700]],
+				"EM3": [[23000,23700]],
+				"EM4": [[23000,23700]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "./data/avr/transfer_learning/12/",
+		"normalization": "minmax",
+		"split": [0.0625, 0.0625, 0.0625],
+		"byte": 2
+	},
+	"training":
+		{
+			"multichannel":
+			{
+				"data": ["EM4"],
+				"root_folder_models": "../models/avr/ascad/transfer_learning/12/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+									"epoch": 400,
+									"batch_size": 128,
+									"continue_from_model": "best-rank"
+									}
+			},
+			"multichannel2":
+			{
+				"data": ["EM2", "EM3"],
+				"root_folder_models": "../models/avr/ascad/transfer_learning/100/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+									"epoch": 200,
+									"batch_size": 128
+									}
+			},
+			"transfer":
+			{
+				"data": ["EM2+EM4", "EM3+EM4"],
+				"root_folder_pretrained": "../models/avr/ascad/transfer_learning/100/",
+				"root_folder_models": "../models/avr/ascad/transfer_learning/112-2/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 1,
+				"arch": "transfert0",
+				"metric_load": "best-rank",
+				"pretrain_with_epoch":[9, 9, 9, 9, 9, 9],
+				"hyperparameters": {
+									"epoch": 200,
+									"batch_size": 128
+									}
+			}
+		},
+		"attack":
+		{
+			"target": "EM4",
+			"metric_attack": "best-rank",
+			"folder_numeric_graph": "./graph_ge2/numeric/stm32/ascad/transfer_channel/EM4/",
+			"folder_png_graph": "./graph_ge2/png/stm32/ascad/transfer_channel/EM4/"
+		}
+}

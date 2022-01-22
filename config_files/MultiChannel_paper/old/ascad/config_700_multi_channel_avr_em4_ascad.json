@@ -1,0 +1,42 @@
+{
+	"dataset": {
+		"root": "/data2/backup_anz/e/Measures/multi-probes/",
+		"name": "traces_O0_3.h5",
+		"frame": {
+				"EM2": [[16000,16700]],
+				"EM3": [[23000,23700]],
+				"EM4": [[23000,23700]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "./data/avr/multi_channels/",
+		"normalization": "minmax",
+		"split": [0.5, 0.5, 0.5],
+		"byte": 2
+	},
+	"training":
+		{
+			"multichannel":
+			{
+				"data": ["EM4", "EM4*EM2", "EM4*EM3", "EM4*EM2*EM3"],
+				"root_folder_models": "../models/avr/ascad/multi_channels/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "ascad",
+				"hyperparameters": {
+									"epoch": 200,
+									"batch_size": 128
+									}
+			}
+		},
+	"attack":
+		{
+			"target": "EM4",
+			"zoom": 0,
+			"metric_attack": "best-loss",
+			"folder_numeric_graph": "./graph/numeric/avr/ascad/multi_channels/EM4/",
+			"folder_png_graph": "./graph/png/avr/ascad/multi_channels/EM4/"
+
+		}
+}

@@ -1,0 +1,34 @@
+{
+	"dataset": {
+		"root": "./",
+		"name": "trace_ASCAD-protected_v2.h5",
+		"frame": {
+				"clean": [[0, 700]],
+				"gaussian": [[0, 700]],
+				"desynch50": [[0, 700]],
+				"desynch100": [[0, 700]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "../data_gan/ascad-protected/translate/",
+		"normalization": "minmax",
+		"split": [1.0, 1.0, 1.0, 1.0],
+		"byte": 2
+	},
+	"training":
+	{
+		"multichannel":
+		{
+			"data": ["clean", "gaussian", "desynch50", "desynch100"],
+			"root_folder_models": "../models_gan/ascad-protected/ascad/translate/",
+			"kfold": 1,
+			"ntp": 0.8,
+			"gpu": 0,
+			"arch": "ascad",
+			"hyperparameters": {
+								"epoch": 100,
+								"batch_size": 128
+								}
+		}
+	}
+}

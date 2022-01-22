@@ -1,0 +1,39 @@
+{
+	"dataset": {
+		"root": "./",
+		"name": "trace_BD.h5",
+		"frame": {
+				"08BF0EM": [[350,450], [1600,1800], [2200,2400], [3200,3400]],
+				"08BF0PW": [[440,490], [1830,1930], [2350,2500], [3400,3800]],
+				"08BF1EM": [[250,350], [1300,1900]],
+				"08BF1PW": [[250,350], [1300,1900]],
+				"08BF2EM": [[600,800], [2700,3000], [3450,3650]],
+				"08BF2PW": [[600,800], [2700,3000], [3450,3650]],
+				"08BF4EM": [[500,700], [2800,3000], [3700,4000]],
+				"08BF4PW": [[500,700], [2800,3000], [3700,4000]]
+			},
+		"size_frame": 700,
+		"predictor": "SNR4",
+		"root_folder_data": "./data/stm32/transfer_learning/100/",
+		"normalization": "minmax",
+		"split": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+		"byte": 2
+	},
+	"training":
+		{
+			"multichannel":
+			{
+				"data": ["08BF0EM", "08BF0PW", "08BF1EM", "08BF1PW", "08BF2EM", "08BF2PW", "08BF4EM", "08BF4PW"],
+				"root_folder_models": "../models/stm32/zaid/transfer_learning/100/",
+				"kfold": 1,
+				"ntp": 0.8,
+				"gpu": 0,
+				"arch": "zaid",
+				"hyperparameters": {
+									"epoch": 2000,
+									"batch_size": 128,
+									"continue_from_model": "best-rank"
+									}
+			}
+		}
+}
